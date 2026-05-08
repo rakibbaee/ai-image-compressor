@@ -6,9 +6,9 @@ export default function Home() {
   const [showMsg, setShowMsg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [stats, setStats] = useState(null);
+  const [quality, setQuality] = useState(80);
   const fileInputRef = useRef(null);
 
-  // ব্রেইন হ্যাক: ভাইব্রেশন ফাংশন
   const triggerVibration = () => {
     if (typeof window !== "undefined" && navigator.vibrate) {
       navigator.vibrate(50);
@@ -16,8 +16,7 @@ export default function Home() {
   };
 
   const handleAction = () => {
-    triggerVibration(); // ক্লিকেই ফোন কাঁপবে!
-    
+    triggerVibration();
     if (clicks === 0) {
       window.open("https://www.profitablecpmratenetwork.com/fp88w4cu?key=2c0368f539be5d8cad3117658eb622aa", "_blank");
       setShowMsg(true);
@@ -33,7 +32,7 @@ export default function Home() {
     const file = e.target.files[0];
     if (!file) return;
 
-    triggerVibration(); // ফাইল সিলেক্ট হলেও কাঁপবে!
+    triggerVibration();
 
     const originalSize = (file.size / 1024 / 1024).toFixed(2); 
     setIsLoading(true);
@@ -41,6 +40,7 @@ export default function Home() {
 
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("quality", quality);
 
     try {
       const res = await fetch("/api/compress", {
@@ -61,7 +61,7 @@ export default function Home() {
         a.remove();
 
         setStats({ original: originalSize, compressed: compressedSize });
-        triggerVibration(); // সাকসেস হলেও কাঁপবে!
+        triggerVibration();
       } else {
         alert("Compression failed! 🥲");
       }
@@ -78,6 +78,22 @@ export default function Home() {
       <div className="bg-slate-800/50 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-slate-700 max-w-md w-full text-center transform transition-all">
         <h1 className="text-3xl font-extrabold mb-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">AI Image Compressor</h1>
         <p className="text-sm text-slate-400 mb-8 font-medium">No login required. 100% Free.</p>
+
+        <div className="mb-8 text-left bg-slate-800/60 p-4 rounded-xl border border-slate-600">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-bold text-slate-300">Compression Quality</label>
+            <span className="text-xs font-bold text-blue-400 bg-blue-500/20 px-2 py-1 rounded-md">{quality}%</span>
+          </div>
+          <input 
+            type="range" 
+            min="10" 
+            max="100" 
+            value={quality} 
+            onChange={(e) => setQuality(e.target.value)}
+            className="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+          />
+          <p className="text-[10px] text-slate-400 mt-2 text-center">Lower % = Smaller size, Higher % = Better clarity</p>
+        </div>
 
         <div className="border-2 border-dashed border-slate-600 rounded-2xl p-8 mb-6 hover:border-blue-500 transition-all bg-slate-800/30 active:scale-95">
           <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
