@@ -85,7 +85,7 @@ export default function Home() {
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-4">
               <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500 mb-3 shadow-[0_0_15px_rgba(37,99,235,0.5)]"></div>
-              <p className="text-blue-400 text-sm font-bold animate-pulse tracking-wide">AI is hacking the pixels...</p>
+              <p className="text-blue-400 text-sm font-bold animate-pulse tracking-wide">Squeezing size... Preserving 100% quality 🪄</p>
             </div>
           ) : (
             <button 
