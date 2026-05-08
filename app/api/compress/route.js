@@ -5,6 +5,7 @@ export async function POST(request) {
   try {
     const data = await request.formData();
     const file = data.get('image');
+    const qualityValue = parseInt(data.get('quality')) || 80; 
 
     if (!file) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
@@ -13,9 +14,8 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // AI smart compression logic with Sharp
     const compressedBuffer = await sharp(buffer)
-      .webp({ quality: 60, effort: 6 }) 
+      .webp({ quality: qualityValue, effort: 6 }) 
       .toBuffer();
 
     return new NextResponse(compressedBuffer, {
