@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* ডাইরেক্ট ব্রেইন ইনজেকশন হ্যাক: টেলউইন্ড সিডিএন */}
         <script src="https://cdn.tailwindcss.com"></script>
+        <meta name="google-site-verification" content="PcRwGjct11JEzMDA67fZCjcvCNV94TUsyYhPa8yNL3A" />
       </head>
       <body>
         {children}
